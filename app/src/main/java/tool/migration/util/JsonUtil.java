@@ -7,6 +7,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import tool.migration.logging.AppLogger;
+
 public class JsonUtil {
      private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -77,5 +79,50 @@ public class JsonUtil {
                throw new RuntimeException("Error filtrando array condicionado", e);
           }
      }
+
+
+     /**i
+     * Mapea un array JSON (ej: items) a una lista de objetos Java.
+     *
+     * @param json       JSON completo como String
+     * @param arrayField nombre del campo array (ej: "items")
+     * @param clazz      clase destino
+     * @param <T>        tipo genérico
+     * @return lista de objetos mapeados
+     */
+    public static <T> List<T> mapArray(
+            String json,
+            String arrayField,
+            Class<T> clazz
+    ) {
+        try {
+            JsonNode root = MAPPER.readTree(json);
+            JsonNode arrayNode = root.get(arrayField);
+
+            AppLogger.debug("JsonUtil.mapArray field=" + arrayField +
+                    ", targetClass=" + clazz.getSimpleName());
+
+            if (arrayNode == null || !arrayNode.isArray()) {
+                throw new IllegalArgumentException(
+                        "El campo '" + arrayField + "' no existe o no es un array"
+                );
+            }
+
+            List<T> result = new ArrayList<>();
+
+            for (JsonNode element : arrayNode) {
+                result.add(MAPPER.treeToValue(element, clazz));
+            }
+
+            return result;
+
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Error mapeando array '" + arrayField +
+                    "' a clase " + clazz.getSimpleName(), e
+            );
+        }
+    }
+
 
 }

@@ -9,6 +9,8 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.Map;
 
+import tool.migration.logging.AppLogger;
+
 public class WebLogicRestClient {
 
     private final HttpClient client;
@@ -43,6 +45,10 @@ public class WebLogicRestClient {
         HttpRequest request = baseRequest(buildUrl(path, query))
                 .GET()
                 .build();
+        URI requestUri = request.uri();
+        String urlString = requestUri.toString();
+   
+        AppLogger.info( urlString);
         return send(request);
     }
 
@@ -65,6 +71,7 @@ public class WebLogicRestClient {
                         body != null ? body : "{}"
                 ))
                 .build();
+        
         return send(request);
     }
 
@@ -80,6 +87,7 @@ public class WebLogicRestClient {
     // ---------------- Helpers ----------------
 
     private HttpRequest.Builder baseRequest(String url) {
+        AppLogger.debug(url);
         return HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(Duration.ofSeconds(30))
@@ -93,7 +101,7 @@ public class WebLogicRestClient {
         try {
             HttpResponse<String> response =
                     client.send(request, HttpResponse.BodyHandlers.ofString());
-
+            AppLogger.debug(String.valueOf(response.statusCode()));
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
                 return response.body();
             }

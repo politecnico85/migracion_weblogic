@@ -20,8 +20,9 @@ public class ServerExtractor {
     /** Lista de nombres desde domainConfig */
     public List<String> listServerNames() {
 
-         AppLogger.debug("Obteniendo lista de servidores (edit tree)");
+        AppLogger.debug("Obteniendo lista de servidores (edit tree)");
         String json = service.getFromDomainConfig("");
+       
         return JsonUtil.readStringArray(json, "items[].name");
     }
 
@@ -52,7 +53,7 @@ public class ServerExtractor {
 
         cfg.setListenPort(JsonUtil.getInt(json, "listenPort"));
         cfg.setCluster(JsonUtil.getString(json, "cluster"));
-        cfg.setMachine(JsonUtil.getString(json, "machine"));
+        //cfg.setMachine(JsonUtil.getString(json, "machine"));
         cfg.setKeyStores(JsonUtil.getString(json, "keyStores"));
         cfg.setCustomTrustKeyStoreFileName(
                 JsonUtil.getString(json, "customTrustKeyStoreFileName")
@@ -65,7 +66,7 @@ public class ServerExtractor {
     private void loadFromDomainConfig(String serverName, ManagedServerConfig cfg) {
 
         String json = service.getFromDomainConfig("/Servers/" + serverName);
-        cfg.setListenPortDomain(
+        cfg.setListenPort(
                 JsonUtil.getInt(json, "listenPort")
         );
     }

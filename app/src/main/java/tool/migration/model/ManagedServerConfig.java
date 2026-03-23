@@ -5,18 +5,25 @@ package tool.migration.model;
 public class ManagedServerConfig {
 
     private String name;
+    private String type;
 
-    // edit
+    private String listenAddress;
     private Integer listenPort;
+
     private String cluster;
-    private String machine;
+    //private String machine;
 
     private String keyStores;
-    private String customTrustKeyStoreFileName;
     private String customTrustKeyStoreType;
+    private String customTrustKeyStorePassPhrase;
+    private String customTrustKeyStoreFileName;
 
-    // domainConfig (si aplica)
-    private Integer listenPortDomain;
+    private Boolean autoRestart;
+    private Integer restartMax;
+
+    private String notes;
+
+    // getters & setters
 
     public String getName() {
         return name;
@@ -26,11 +33,27 @@ public class ManagedServerConfig {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getListenAddress() {
+        return listenAddress;
+    }
+
+    public void setListenAddress(String listenAddress) {
+        this.listenAddress = listenAddress;
+    }
+
     public Integer getListenPort() {
         return listenPort;
     }
 
-    public void setListenPort(Integer listenPort) {
+    public void setListenPort(int listenPort) {
         this.listenPort = listenPort;
     }
 
@@ -42,13 +65,13 @@ public class ManagedServerConfig {
         this.cluster = cluster;
     }
 
-    public String getMachine() {
-        return machine;
-    }
+    //public String getMachine() {
+    //    return machine;
+    //}
 
-    public void setMachine(String machine) {
-        this.machine = machine;
-    }
+    //public void setMachine(String machine) {
+    //    this.machine = machine;
+    //}
 
     public String getKeyStores() {
         return keyStores;
@@ -56,14 +79,6 @@ public class ManagedServerConfig {
 
     public void setKeyStores(String keyStores) {
         this.keyStores = keyStores;
-    }
-
-    public String getCustomTrustKeyStoreFileName() {
-        return customTrustKeyStoreFileName;
-    }
-
-    public void setCustomTrustKeyStoreFileName(String customTrustKeyStoreFileName) {
-        this.customTrustKeyStoreFileName = customTrustKeyStoreFileName;
     }
 
     public String getCustomTrustKeyStoreType() {
@@ -74,13 +89,45 @@ public class ManagedServerConfig {
         this.customTrustKeyStoreType = customTrustKeyStoreType;
     }
 
-    public Integer getListenPortDomain() {
-        return listenPortDomain;
+    public String getCustomTrustKeyStorePassPhrase() {
+        return customTrustKeyStorePassPhrase;
     }
 
-    public void setListenPortDomain(Integer listenPortDomain) {
-        this.listenPortDomain = listenPortDomain;
+    public void setCustomTrustKeyStorePassPhrase(String customTrustKeyStorePassPhrase) {
+        this.customTrustKeyStorePassPhrase = customTrustKeyStorePassPhrase;
     }
 
-    
+    public String getCustomTrustKeyStoreFileName() {
+        return customTrustKeyStoreFileName;
+    }
+
+    public void setCustomTrustKeyStoreFileName(String customTrustKeyStoreFileName) {
+        this.customTrustKeyStoreFileName = customTrustKeyStoreFileName;
+    }
+
+    public Boolean getAutoRestart() {
+        return autoRestart;
+    }
+
+    public void setAutoRestart(Boolean autoRestart) {
+        this.autoRestart = autoRestart;
+    }
+
+    public Integer getRestartMax() {
+        return restartMax;
+    }
+
+    public void setRestartMax(int restartMax) {
+        this.restartMax = restartMax;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+ 
 }

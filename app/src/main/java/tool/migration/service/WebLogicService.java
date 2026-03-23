@@ -22,10 +22,34 @@ public class WebLogicService {
         return client.get("/edit" + path, null);
     }
 
+    public String getFromDomainRuntime(String path, Map<String,String> q) {
+        return client.get("/domainRuntime" + path, q);
+    }
     /** Configuración del dominio */
     public String getFromDomainConfig(String path) {
         //return client.get("/domainConfig" + path, null);
         return client.get("/domainRuntime/serverLifeCycleRuntimes"+ path, Map.of("links", "none", "fields", "state,name"));
         //Map<String, String> query = Map.of("links", "none", "fields", "state,name");
+    }
+
+    public String getFromServerConfig(String string, Map<String,String> map){
+        return client.get("/serverConfig/servers", 
+                Map.of(
+                    "links", "none", 
+                    "fields", 
+                    "name," +
+                    "type," +
+                    "listenAddress," +
+                    "listenPort," +
+                    "cluster," +
+                    "keyStores," +
+                    "customTrustKeyStoreType," +
+                    "customTrustKeyStorePassPhrase," +
+                    "customTrustKeyStoreFileName," +
+                    "autoRestart," +
+                    "restartMax," +
+                    "notes"
+                ));
+        //serverConfig/servers?links=none&fields=name,type,listenAddress,listenPort,cluster,keyStores,customTrustKeyStoreType,customTrustKeyStorePassPhrase,customTrustKeyStoreFileName,autoRestart,restartMax,machine,notes
     }
 }

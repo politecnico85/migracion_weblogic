@@ -19,9 +19,9 @@ public class ManagedServerQueryApp {
 
         WebLogicRestClient client =
                 new WebLogicRestClient(
-                        "http://lnxgye00dw42:7001/management/weblogic/12.2.1.4.0",
+                        "http://localhost:7001/management/weblogic/12.2.1.4.0",
                         "weblogic",
-                        "wldesa2015",
+                        "clave",
                         Duration.ofSeconds(30)
                 );
 

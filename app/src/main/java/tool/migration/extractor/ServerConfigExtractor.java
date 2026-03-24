@@ -27,10 +27,12 @@ public class ServerConfigExtractor {
                     "keyStores,customTrustKeyStoreType," +
                     "customTrustKeyStorePassPhrase," +
                     "customTrustKeyStoreFileName," +
-                    "autoRestart,restartMax,notes"
+                    "autoRestart,restartMax,notes,machine"
                 )
         );
 
         return JsonUtil.mapArray(json, "items", ManagedServerConfig.class);
     }
+
+    
 }

@@ -3,9 +3,11 @@ package tool.migration;
 
 
 import tool.migration.client.WebLogicRestClient;
+import tool.migration.extractor.DatasourceConfigExtractor;
 import tool.migration.extractor.ServerConfigExtractor;
 import tool.migration.extractor.ServerRuntimeExtractor;
 import tool.migration.logging.AppLogger;
+import tool.migration.model.DatasourceConfig;
 import tool.migration.model.ManagedServerConfig;
 import tool.migration.model.ManagedServerRuntime;
 import tool.migration.service.WebLogicService;
@@ -16,10 +18,14 @@ import java.util.List;
 public class ManagedServerQueryApp {
 
     public static void main(String[] args) {
-
+        String Template= "http://%SERVER%:%PORT%/management/weblogic/12.2.1.4.0";
+        String Server = "localhost";
+        String Port = "7001";
+        String BaseURL = Template.replace("%SERVER%", Server)
+                     .replace("%PORT%", Port);
         WebLogicRestClient client =
                 new WebLogicRestClient(
-                        "http://localhost:7001/management/weblogic/12.2.1.4.0",
+                        BaseURL,
                         "weblogic",
                         "clave",
                         Duration.ofSeconds(30)
@@ -39,9 +45,10 @@ public class ManagedServerQueryApp {
                 AppLogger.info(config.getName() + " : " + config.getListenPort());
         }
 
-        //ServerExtractor extractor = new ServerExtractor(service);
-
-        //extractor.getAllServerConfigs()
-        //        .forEach(System.out::println);
+        DatasourceConfigExtractor datasourceExtractor = new DatasourceConfigExtractor(service);
+        List<DatasourceConfig> datasources = datasourceExtractor.getAllDatasourceConfig();
+        for (DatasourceConfig config : datasources) {
+                AppLogger.info(config.getName());
+        }
     }
 }

@@ -52,7 +52,7 @@ public class ServerExtractor {
         String json = service.getFromEdit("/Servers/" + serverName);
 
         cfg.setListenPort(JsonUtil.getInt(json, "listenPort"));
-        cfg.setCluster(JsonUtil.getString(json, "cluster"));
+        //cfg.setCluster(JsonUtil.getString(json, "cluster"));
         //cfg.setMachine(JsonUtil.getString(json, "machine"));
         cfg.setKeyStores(JsonUtil.getString(json, "keyStores"));
         cfg.setCustomTrustKeyStoreFileName(

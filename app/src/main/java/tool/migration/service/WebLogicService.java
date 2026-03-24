@@ -1,6 +1,6 @@
 package tool.migration.service;
 
-import java.util.List;
+
 import java.util.Map;
 
 import tool.migration.client.WebLogicRestClient;
@@ -48,8 +48,22 @@ public class WebLogicService {
                     "customTrustKeyStoreFileName," +
                     "autoRestart," +
                     "restartMax," +
-                    "notes"
+                    "notes," +
+                    "machine"
                 ));
         //serverConfig/servers?links=none&fields=name,type,listenAddress,listenPort,cluster,keyStores,customTrustKeyStoreType,customTrustKeyStorePassPhrase,customTrustKeyStoreFileName,autoRestart,restartMax,machine,notes
+    }
+
+    public String getFromDatasourceConfig(String string, Map<String, String> map) {
+        return client.get("/domainConfig/JDBCSystemResources",
+                Map.of(
+                    "links", "none", 
+                    "fields", 
+                    "identity,"+
+                    "name,"+
+                    "type,"+
+                    "descriptorFileName,"+
+                    "targets"
+                ));
     }
 }

@@ -1,25 +1,27 @@
-package tool.migration.model;
+package tool.migration.model.domainConfig.JDBCResource;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DatasourceConfig {
+public class JDBCDatasourcesConfig {
     private String name;
     private String type;
-    private String targets;
+    private String targetServer;
 
+    /* 
      @JsonProperty("targets")
     private void unpackTargets(Object targetsData) {
         if (targetsData instanceof List) {
             List<?> list = (List<?>) targetsData;
-            // Según tu JSON: [{ "identity": [ "servers", "AppServerEslognotificainversion" ] }]
+            // Según el JSON: [{ "identity": [ "servers", "AppServerEslognotificainversion" ] }]
            
             // El nombre real es el segundo elemento (índice 1)
             List<?> listIdentity = (List<?>) list;
-            if (listIdentity.size() >= 2) {
+            if (listIdentity.size() > 1) {
                 this.targets = listIdentity.get(1).toString();
             } else if (list.size() == 1) {
                 this.targets = listIdentity.get(0).toString();
@@ -29,6 +31,24 @@ public class DatasourceConfig {
             this.targets = targetsData != null ? targetsData.toString() : null;
         }
     }
+     */
+
+    @JsonProperty("targets")
+    private void unpackTargetServer(List<Map<String, Object>> targets) {
+        if (targets != null && !targets.isEmpty()) {
+            // 1. Obtenemos el primer objeto del array targets
+            Map<String, Object> firstTarget = targets.get(0);
+            
+            // 2. Extraemos la lista 'identity'
+            List<String> identity = (List<String>) firstTarget.get("identity");
+            
+            // 3. El nombre del servidor está en la posición 1 (índice 1)
+            if (identity != null && identity.size() >= 2) {
+                this.targetServer = identity.get(1);
+            }
+        }
+    }
+
 
      private String identity;
 
@@ -53,15 +73,6 @@ public class DatasourceConfig {
     private String descriptorFileName;
 
 
-    private String password;
-    private String driverName;
-    private String url;
-    private Integer minCapacity;
-    private String testTableName;
-    private Integer maxCapacity;
-    private Integer testFrequencySeconds;
-
-
     public String getName() {
         return name;
     }
@@ -74,8 +85,8 @@ public class DatasourceConfig {
     public void setType(String type) {
         this.type = type;
     }
-    public String getTargets() {
-        return targets;
+    public String getTargetServer() {
+        return targetServer;
     }
     /*
     public void setTarget(String target) {

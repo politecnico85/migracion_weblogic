@@ -124,5 +124,15 @@ public class JsonUtil {
         }
     }
 
+    public static <T> T mapObject(String json, Class<T> clazz) {
+    try {
+        AppLogger.debug("JsonUtil.mapObject -> " + clazz.getSimpleName());
+        return MAPPER.readValue(json, clazz);
+    } catch (Exception e) {
+        throw new RuntimeException(
+            "Error mapeando JSON a clase " + clazz.getSimpleName(), e
+        );
+    }
+}
 
 }

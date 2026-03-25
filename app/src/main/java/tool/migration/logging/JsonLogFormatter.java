@@ -12,7 +12,7 @@ public class JsonLogFormatter extends Formatter {
             DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.systemDefault());
 
 
-    
+    /* 
     @Override
     public String format(LogRecord r) {
         return String.format(
@@ -22,8 +22,8 @@ public class JsonLogFormatter extends Formatter {
             r.getMessage().replace("\"","\\\"")
         );
     }
-
-    /* 
+    */
+    
     @Override
     public synchronized String format(LogRecord r) {
 
@@ -54,7 +54,7 @@ public class JsonLogFormatter extends Formatter {
         sb.append("}\n");
         return sb.toString();
     }
-        */
+        
 
     private String escape(String s) {
         if (s == null) return "";

@@ -54,7 +54,7 @@ public class WebLogicService {
         //serverConfig/servers?links=none&fields=name,type,listenAddress,listenPort,cluster,keyStores,customTrustKeyStoreType,customTrustKeyStorePassPhrase,customTrustKeyStoreFileName,autoRestart,restartMax,machine,notes
     }
 
-    public String getFromDatasourceConfig(String string, Map<String, String> map) {
+    public String getFromJDBCDatasourcesConfig(String string, Map<String, String> map) {
         return client.get("/domainConfig/JDBCSystemResources",
                 Map.of(
                     "links", "none", 
@@ -65,5 +65,61 @@ public class WebLogicService {
                     "descriptorFileName,"+
                     "targets"
                 ));
+    }
+
+
+    public String getFromJDBCConnectionPoolParamsConfig(String datasourceName, Map<String, String> map ){
+        String template = "/domainConfig/JDBCSystemResources/#DATASOURCE#/JDBCResource/JDBCConnectionPoolParams";
+        String path = template.replace("#DATASOURCE#", datasourceName);
+        return client.get(path, 
+            Map.of(
+                "links", "none",
+                "fields",
+                "inactiveConnectionTimeoutSeconds,"+
+                "testConnectionsOnReserve,"+
+                "fatalErrorCodes,"+
+                "initialCapacity,"+
+                "statementTimeout,"+
+                "countOfRefreshFailuresTillDisable,"+
+                "minCapacity,"+
+                "maxCapacity,"+
+                "secondsToTrustAnIdlePoolConnection,"+
+                "shrinkFrequencySeconds,"+
+                "connectionReserveTimeoutSeconds,"+
+                "testTableName,"+
+                "identity"
+            )    
+        );
+    }
+
+    public String getFromJDBCDriversParamsConfig(String datasourceName, Map<String, String> map ){
+        String template = "/domainConfig/JDBCSystemResources/#DATASOURCE#/JDBCResource/JDBCDriverParams";
+        String path = template.replace("#DATASOURCE#", datasourceName);
+        return client.get(path, 
+            Map.of(
+                "links", "none",
+                "fields",
+                "password,"+
+                "driverName,"+
+                "url,"+
+                "identity"
+            )    
+        );
+    }
+
+    public String getFromJDBCPropertiesConfig(String datasourceName, Map<String, String> map ){
+        String template = "/domainConfig/JDBCSystemResources/#DATASOURCE#/JDBCResource/JDBCDriverParams/properties/properties/user";
+        String path = template.replace("#DATASOURCE#", datasourceName);
+        return client.get(path, 
+            Map.of(
+                "links", "none",
+                "fields",
+                "encryptedValue,"+
+                "name,"+
+                "sysPropValue,"+
+                "value,"+
+                "identity"
+            )    
+        );
     }
 }

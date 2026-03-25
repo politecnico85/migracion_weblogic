@@ -4,8 +4,7 @@ package tool.migration;
 
 import tool.migration.client.WebLogicRestClient;
 import tool.migration.extractor.DatasourceConfigExtractor;
-import tool.migration.extractor.DatasourceConnectionPoolParamsExtractor;
-import tool.migration.extractor.DatasourceDriverParamsExtractor;
+
 import tool.migration.extractor.ServerConfigExtractor;
 import tool.migration.extractor.ServerRuntimeExtractor;
 import tool.migration.logging.AppLogger;
@@ -26,7 +25,7 @@ public class ManagedServerQueryApp {
 
     public static void main(String[] args) {
         String Template= "http://%SERVER%:%PORT%/management/weblogic/12.2.1.4.0";
-        String Server = "lnxgye00dw42";
+        String Server = "servidor";
         String Port = "7001";
         String BaseURL = Template.replace("%SERVER%", Server)
                      .replace("%PORT%", Port);
@@ -34,7 +33,7 @@ public class ManagedServerQueryApp {
                 new WebLogicRestClient(
                         BaseURL,
                         "weblogic",
-                        "wldesa2015",
+                        "clase",
                         Duration.ofSeconds(30)
                 );
         AppLogger.setFormat(LogFormat.JSON); // logging estructurado

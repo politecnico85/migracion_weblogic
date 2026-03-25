@@ -33,7 +33,7 @@ public class ManagedServerQueryApp {
                 new WebLogicRestClient(
                         BaseURL,
                         "weblogic",
-                        "clase",
+                        "clave",
                         Duration.ofSeconds(30)
                 );
         AppLogger.setFormat(LogFormat.JSON); // logging estructurado

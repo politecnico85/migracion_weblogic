@@ -34,15 +34,7 @@ public class ManagedServerQueryApp {
         //String BaseURL = Template.replace("%SERVER%", Server)
         //             .replace("%PORT%", Port);
         
-        /* 
-        WebLogicRestClient client =
-                new WebLogicRestClient(
-                        BaseURL,
-                        "weblogic",
-                        "wldesa2015",
-                        Duration.ofSeconds(30)
-                );
-        */
+        
         //AppLogger.setFormat(LogFormat.JSON); // logging estructurado
 
         //WebLogicConnectionInfo info = new WebLogicConnectionInfo();

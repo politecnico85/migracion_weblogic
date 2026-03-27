@@ -3,65 +3,64 @@ package tool.migration.logging;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import tool.migration.util.JsonLogStyle;
+
 public class JsonLogFormatter extends Formatter {
 
-    private static final DateTimeFormatter ISO =
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.systemDefault());
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
+    private final JsonLogStyle style;
 
-    /* 
+    public JsonLogFormatter(JsonLogStyle style) {
+        this.style = style;
+    }
+
     @Override
     public String format(LogRecord r) {
-        return String.format(
-            "{\"timestamp\":\"%s\",\"level\":\"%s\",\"message\":\"%s\"}%n",
-            Instant.ofEpochMilli(r.getMillis()),
-            r.getLevel(),
-            r.getMessage().replace("\"","\\\"")
-        );
-    }
-    */
-    
-    @Override
-    public synchronized String format(LogRecord r) {
+        try {
 
-        String cls = r.getSourceClassName();
-        String mtd = r.getSourceMethodName();
+            String cls = r.getSourceClassName();
+            String mtd = r.getSourceMethodName();
 
-        if (cls != null && cls.contains(".")) {
-            cls = cls.substring(cls.lastIndexOf('.') + 1);
+            if (cls != null && cls.contains(".")) {
+                cls = cls.substring(cls.lastIndexOf('.') + 1);
+            }
+            Map<String,Object> map = new LinkedHashMap<>();
+            map.put("timestamp", Instant.ofEpochMilli(r.getMillis()));
+            map.put("level", r.getLevel().getName());
+            map.put("logger", r.getLoggerName());
+            
+            // ✅ CORRELATION ID
+            map.put("correlationId", CorrelationContext.get());
+
+            map.put("thread", Thread.currentThread().getName());
+            map.put("class", cls != null ? cls : "Unknown");
+            map.put("method", mtd != null ? mtd : "unknown");
+            
+            map.put("message", r.getMessage());
+
+            if (r.getThrown() != null) {
+                map.put("exception", r.getThrown().toString());
+            }
+
+            if (style == JsonLogStyle.PRETTY) {
+                return MAPPER.writerWithDefaultPrettyPrinter()
+                             .writeValueAsString(map) + "\n";
+            } else {
+                return MAPPER.writeValueAsString(map) + "\n"; // compact
+            }
+
+        } catch (Exception e) {
+            return r.getMessage() + "\n";
         }
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("{");
-        sb.append("\"timestamp\":\"").append(ISO.format(Instant.ofEpochMilli(r.getMillis()))).append("\",");
-        sb.append("\"level\":\"").append(r.getLevel().getName()).append("\",");
-        sb.append("\"thread\":\"").append(Thread.currentThread().getName()).append("\",");
-        sb.append("\"logger\":\"").append(r.getLoggerName()).append("\",");
-        sb.append("\"class\":\"").append(cls != null ? cls : "Unknown").append("\",");
-        sb.append("\"method\":\"").append(mtd != null ? mtd : "unknown").append("\",");
-        sb.append("\"message\":\"").append(escape(r.getMessage())).append("\"");
-
-        if (r.getThrown() != null) {
-            sb.append(",\"exception\":\"")
-              .append(escape(r.getThrown().toString()))
-              .append("\"");
-        }
-
-        sb.append("}\n");
-        return sb.toString();
-    }
-        
-
-    private String escape(String s) {
-        if (s == null) return "";
-        return s.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\n", "\\n");
     }
 }
-
-

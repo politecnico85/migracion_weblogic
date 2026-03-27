@@ -49,6 +49,19 @@ public class JsonUtil {
         }
     }
 
+    
+    public static String prettyJson(String rawJson) {
+        try {
+            Object json = MAPPER.readValue(rawJson, Object.class);
+            return MAPPER
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(json);
+        } catch (Exception e) {
+            throw new RuntimeException("Error prettifying JSON", e);
+        }
+    }
+
+
      /**
       * Retorna nombres de items cuyo array "targets" contiene el valor indicado.
      */

@@ -28,11 +28,11 @@ import java.util.List;
 public class ManagedServerQueryApp {
 
     public static void main(String[] args) {
-        String Template= "http://%SERVER%:%PORT%/management/weblogic/12.2.1.4.0";
-        String Server = "lnxgye00dw55";
-        String Port = "7001";
-        String BaseURL = Template.replace("%SERVER%", Server)
-                     .replace("%PORT%", Port);
+        //String Template= "http://%SERVER%:%PORT%/management/weblogic/12.2.1.4.0";
+        //String Server = "server55";
+        //String Port = "7001";
+        //String BaseURL = Template.replace("%SERVER%", Server)
+        //             .replace("%PORT%", Port);
         
         /* 
         WebLogicRestClient client =

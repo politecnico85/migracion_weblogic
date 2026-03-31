@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ManagedServerConfig {
@@ -171,6 +173,30 @@ public class ManagedServerConfig {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String toJsonCustom() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode root = mapper.createObjectNode();
+
+            // 1. Campos simples
+            root.put("name", this.name);
+            root.put("listenAddress", this.listenAddress);
+            root.put("listenPort", this.listenPort);
+
+            // 2. Transformar machine a objeto { "name": "valor" }
+            if (this.machine != null) {
+                root.putObject("machine").put("name", this.machine);
+            } else {
+                root.putNull("machine");
+            }
+
+            // Retorna el JSON como String bonito (pretty print)
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
+        } catch (Exception e) {
+            return "{\"error\": \"No se pudo generar el JSON: " + e.getMessage() + "\"}";
+        }
     }
 
     @Override

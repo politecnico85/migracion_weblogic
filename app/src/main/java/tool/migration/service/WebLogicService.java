@@ -122,4 +122,52 @@ public class WebLogicService {
             )    
         );
     }
+
+
+    // ==========================================================
+    // ========================== EDIT ==========================
+    // ==========================================================
+
+    public String exists(String path, Map<String, String> query) {
+        return client.get("/edit" + normalize(path), query);
+    }
+
+    /**
+     * Lee información desde el árbol edit (poco usado, pero disponible).
+     */
+    public String getFromEdit(String path, Map<String, String> query) {
+        return client.get("/edit" + normalize(path), query);
+    }
+
+    /**
+     * Crea recursos en el árbol edit.
+     */
+    public String post(String path, String body) {
+        return client.post("/edit" + normalize(path), null, body);
+    }
+
+    /**
+     * Actualiza recursos en el árbol edit.
+     */
+    public String put(String path, String body) {
+        return client.put("/edit" + normalize(path), null, body);
+    }
+
+    /**
+     * Elimina recursos en el árbol edit.
+     */
+    public String delete(String path, Map<String, String> query) {
+        return client.delete("/edit" + normalize(path), query);
+    }
+
+    // ==========================================================
+    // ====================== HELPERS ===========================
+    // ==========================================================
+
+    private static String normalize(String path) {
+        if (path == null || path.isBlank()) {
+            return "";
+        }
+        return path.startsWith("/") ? path : "/" + path;
+    }
 }

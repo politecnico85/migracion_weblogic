@@ -18,7 +18,7 @@ public final class WebLogicServiceFactory {
         String baseUrl = WebLogicUrlBuilder.buildBaseUrl(connection);
 
         WebLogicRestClient client =
-                new WebLogicRestClient(baseUrl, credentials);
+                new WebLogicRestClient(baseUrl, credentials, connection);
 
         return new WebLogicService(client);
     }

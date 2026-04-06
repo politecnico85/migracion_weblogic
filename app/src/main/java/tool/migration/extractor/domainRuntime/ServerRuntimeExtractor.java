@@ -1,4 +1,4 @@
-package tool.migration.extractor;
+package tool.migration.extractor.domainRuntime;
 
 
 import tool.migration.model.ManagedServerRuntime;

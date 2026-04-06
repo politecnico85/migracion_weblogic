@@ -81,14 +81,14 @@ public class ServerCreator {
             putIfNotNull(payload, "machine", cfg.getMachine());     // idem
 
             // keystores / trust
-            putIfNotNull(payload, "keyStores", cfg.getKeyStores());
-            putIfNotNull(payload, "customTrustKeyStoreType", cfg.getCustomTrustKeyStoreType());
-            putIfNotNull(payload, "customTrustKeyStorePassPhrase", cfg.getCustomTrustKeyStorePassPhrase());
-            putIfNotNull(payload, "customTrustKeyStoreFileName", cfg.getCustomTrustKeyStoreFileName());
+            //putIfNotNull(payload, "keyStores", cfg.getKeyStores());
+            //putIfNotNull(payload, "customTrustKeyStoreType", cfg.getCustomTrustKeyStoreType());
+            //putIfNotNull(payload, "customTrustKeyStorePassPhrase", cfg.getCustomTrustKeyStorePassPhrase());
+            //putIfNotNull(payload, "customTrustKeyStoreFileName", cfg.getCustomTrustKeyStoreFileName());
 
             // HA / Restart
-            putIfNotNull(payload, "autoRestart", cfg.getAutoRestart());
-            putIfNotNull(payload, "restartMax", cfg.getRestartMax());
+            //putIfNotNull(payload, "autoRestart", cfg.getAutoRestart());
+            //putIfNotNull(payload, "restartMax", cfg.getRestartMax());
 
             // Observaciones
             putIfNotNull(payload, "notes", cfg.getNotes());

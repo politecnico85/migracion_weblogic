@@ -26,11 +26,37 @@ public class WebLogicService {
         return client.get("/domainRuntime" + path, q);
     }
     /** Configuración del dominio */
+    public String getFromDomainConfig(String path,  Map<String,String> q) {
+        return client.get("/domainConfig"+ path, q);
+    }
+
+
     public String getFromDomainConfig(String path) {
         //return client.get("/domainConfig" + path, null);
         return client.get("/domainRuntime/serverLifeCycleRuntimes"+ path, Map.of("links", "none", "fields", "state,name"));
         //Map<String, String> query = Map.of("links", "none", "fields", "state,name");
     }
+
+
+    public String getClusterConfig(String path, Map<String,String> map){
+        return client.get("/domainConfig/clusters", 
+            Map.of(
+                "links", "none",
+                "fields",
+                "identity"
+            ) );  
+    }
+
+    /*
+    public String getMAchineConfig(String path, Map<String,String> map) {
+        return client.get("/domainConfig/machines", 
+            Map.of(
+                "links", "none",
+                "fields",
+                "identity"
+            ) );  
+    }
+    */
 
     public String getFromServerConfig(String string, Map<String,String> map){
         return client.get("/serverConfig/servers", 

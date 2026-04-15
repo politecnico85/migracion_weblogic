@@ -4,6 +4,34 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
+public class ClusterConfig {
+
+    
+    private String name;
+    private String messagingMode; // unicast | multicast
+
+    
+
+    public String getName() {
+        return name;
+    }
+    public String getMessagingMode() {
+        return messagingMode;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setMessagingMode(String messagingMode) {
+        this.messagingMode = messagingMode;
+    }
+
+    
+
+}
+
+/* 
 public class ClusterConfig {
     private String name;
 
@@ -34,3 +62,5 @@ public class ClusterConfig {
 
     
 }
+
+*/

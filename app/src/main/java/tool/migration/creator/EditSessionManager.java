@@ -19,16 +19,16 @@ public class EditSessionManager {
 
     public void startEdit() {
         AppLogger.info("startEdit()");
-        svc.post("/startEdit", null);
+        svc.post("/changeManager/startEdit", null);
     }
 
     public void activate() {
         AppLogger.info("activate()");
-        svc.post("/edit/changeManager/activate", null);
+        svc.post("/changeManager/activate", null);
     }
 
     public void cancelEdit() {
         AppLogger.warn("cancelEdit()");
-        svc.post("/edit/changeManager/cancelEdit", null);
+        svc.post("/changeManager/cancelEdit", null);
     }
 }

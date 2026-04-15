@@ -155,7 +155,8 @@ public class WebLogicService {
     // ==========================================================
 
     public String exists(String path, Map<String, String> query) {
-        return client.get("/edit" + normalize(path), query);
+        //return client.get("/edit" + normalize(path), query);
+        return getFromEdit("/servers/"+ normalize(path), query);
     }
 
     /**

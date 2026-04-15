@@ -60,18 +60,18 @@ public class ServerCreator {
 
             if (!exists(cfg.getName())) {
                 // 1) Crear el MBean del Server
-                svc.post("/Servers", """
+                svc.post("/servers", """
                 {
                   "name": "%s"
                 }
                 """.formatted(cfg.getName()));
                 AppLogger.info("Server creado: " + cfg.getName());
-            } else {
+            } /*else {
                 AppLogger.info("Server ya existe, se continúa con actualización: " + cfg.getName());
-            }
+            }*/
 
             // 2) Aplicar propiedades (solo las no nulas)
-            String path = "/edit/Servers/" + cfg.getName();
+            String path = "/servers/" + cfg.getName();
 
             // Construir payload con campos no nulos
             Map<String, Object> payload = new LinkedHashMap<>();
@@ -95,7 +95,7 @@ public class ServerCreator {
 
             if (!payload.isEmpty()) {
                 String json = toJson(payload);
-                svc.put(path, json);
+                svc.post(path, json);
                 AppLogger.info("Propiedades aplicadas a: " + cfg.getName());
             } else {
                 AppLogger.info("No hay propiedades para actualizar en: " + cfg.getName());
